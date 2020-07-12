@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Home from './Home';
 
 import './App.css';
+import Welcome from './Welcome';
 
 class App extends React.Component {
   constructor() {
@@ -11,7 +12,12 @@ class App extends React.Component {
     };
   }
   render() {
-    return <Home user={this.state.user} />;
+    return (
+      <div>
+        {this.state.user && <Welcome user={this.state.user} />}
+        <Home user={this.state.user} />
+      </div>
+    );
   }
 }
 
