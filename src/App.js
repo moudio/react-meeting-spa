@@ -6,11 +6,13 @@ import Welcome from './Welcome';
 import Navigation from './Navigation';
 import { Router } from '@reach/router';
 import Login from './Login';
+import Register from './Register';
+import Meetings from './Meetings';
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: 'Mouha',
+      user: null,
     };
   }
   render() {
@@ -21,6 +23,8 @@ class App extends React.Component {
         <Router>
           <Home path="/" user={this.state.user} />
           <Login path="/login" />
+          <Meetings path="/meetings" />
+          <Register path="/meetings" />
         </Router>
       </div>
     );
