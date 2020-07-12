@@ -26,10 +26,11 @@ class Home extends Component {
                 </a>
               </span>
             )}
-
-            <a href="/meetings" className="btn btn-primary">
-              Meetings
-            </a>
+            {user && (
+              <a href="/meetings" className="btn btn-primary">
+                Meetings
+              </a>
+            )}
           </div>
         </div>
       </div>
