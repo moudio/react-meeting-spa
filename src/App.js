@@ -7,6 +7,7 @@ import firebase from './Firebase';
 import Login from './Login';
 import Register from './Register';
 import Meetings from './Meetings';
+import Checkin from './Checkin';
 
 import './App.css';
 
@@ -106,6 +107,7 @@ class App extends React.Component {
             meetings={this.state.meetings}
             userID={this.state.userID}
           />
+          <Checkin path="/checkin/:userID/:meetingID" />
           <Register path="/register" registerUser={this.registerUser} />
         </Router>
       </div>
