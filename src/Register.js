@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import firebase from './Firebase';
 import FormError from './FormError';
 export default class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       displayName: '',
       email: '',
@@ -44,6 +44,9 @@ export default class Register extends Component {
         registrationInfo.email,
         registrationInfo.password
       )
+      .then(() => {
+        this.props.registerUser(registrationInfo.displayName);
+      })
       .catch((error) => {
         if (error.message !== null) {
           this.setState({
@@ -56,6 +59,7 @@ export default class Register extends Component {
         }
       });
   }
+
   render() {
     return (
       <form className="mt-3" onSubmit={this.handleSubmit}>

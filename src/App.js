@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Home from './Home';
 import Welcome from './Welcome';
 import Navigation from './Navigation';
-import { Router } from '@reach/router';
+import { Router, navigate } from '@reach/router';
 import firebase from './Firebase';
 import Login from './Login';
 import Register from './Register';
@@ -15,29 +15,48 @@ class App extends React.Component {
     super();
     this.state = {
       user: null,
+      displayName: null,
+      userID: null,
     };
   }
 
   componentDidMount() {
-    const ref = firebase.database().ref('user');
-    ref.on('value', (snapshot) => {
-      let FBUser = snapshot.val();
-      this.setState({
-        user: FBUser,
-      });
+    firebase.auth().onAuthStateChanged((FBUser) => {
+      if (FBUser) {
+        this.setState({
+          user: FBUser,
+          displayName: FBUser.displayName,
+          userID: FBUser.uid,
+        });
+      }
     });
   }
+
+  registerUser = (userName) => {
+    firebase.auth().onAuthStateChanged((FBUser) => {
+      FBUser.updateProfile({
+        displayName: userName,
+      }).then(() => {
+        this.setState({
+          user: FBUser,
+          displayName: FBUser.displayName,
+          userID: FBUser.uid,
+        });
+        navigate('/meetings');
+      });
+    });
+  };
 
   render() {
     return (
       <div>
         <Navigation user={this.state.user} />
-        {this.state.user && <Welcome user={this.state.user} />}
+        {this.state.user && <Welcome userName={this.state.displayName} />}
         <Router>
           <Home path="/" user={this.state.user} />
           <Login path="/login" />
           <Meetings path="/meetings" />
-          <Register path="/register" />
+          <Register path="/register" registerUser={this.registerUser} />
         </Router>
       </div>
     );
