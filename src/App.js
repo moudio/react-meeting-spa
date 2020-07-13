@@ -62,6 +62,11 @@ class App extends React.Component {
       });
   };
 
+  addMeething = (meetingName) => {
+    const ref = firebase.database().ref(`meetings/${this.state.user.uid}`);
+    ref.push({ meetingName: meetingName });
+  };
+
   render() {
     return (
       <div>
@@ -75,7 +80,7 @@ class App extends React.Component {
         <Router>
           <Home path="/" user={this.state.user} />
           <Login path="/login" />
-          <Meetings path="/meetings" />
+          <Meetings path="/meetings" addMeething={this.addMeething} />
           <Register path="/register" registerUser={this.registerUser} />
         </Router>
       </div>
