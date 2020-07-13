@@ -104,6 +104,7 @@ class App extends React.Component {
             path="/meetings"
             addMeething={this.addMeething}
             meetings={this.state.meetings}
+            userID={this.state.userID}
           />
           <Register path="/register" registerUser={this.registerUser} />
         </Router>

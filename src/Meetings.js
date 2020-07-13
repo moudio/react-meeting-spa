@@ -69,7 +69,10 @@ export default class Meetings extends Component {
               ) : null}
               {this.props.meetings && (
                 <div className="list-groupd list-group-flush">
-                  <MeetingsList meetings={this.props.meetings} />
+                  <MeetingsList
+                    meetings={this.props.meetings}
+                    userID={this.props.userID}
+                  />
                 </div>
               )}
             </div>
