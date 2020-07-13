@@ -100,7 +100,11 @@ class App extends React.Component {
         <Router>
           <Home path="/" user={this.state.user} />
           <Login path="/login" />
-          <Meetings path="/meetings" addMeething={this.addMeething} />
+          <Meetings
+            path="/meetings"
+            addMeething={this.addMeething}
+            meetings={this.state.meetings}
+          />
           <Register path="/register" registerUser={this.registerUser} />
         </Router>
       </div>

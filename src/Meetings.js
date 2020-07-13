@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MeetingsList from './MeetingsList';
 import firebase from './Firebase';
 export default class Meetings extends Component {
   constructor(props) {
@@ -54,6 +55,23 @@ export default class Meetings extends Component {
                   </form>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="col-11 col-md-6 text-center">
+            <div className="card border-top-0 rounded-0">
+              {this.props.meetings && this.props.meetings.length ? (
+                <div className="card-body py-2">
+                  <h4 className="card-title font-weight-light m-0">
+                    Your meetings
+                  </h4>
+                </div>
+              ) : null}
+              {this.props.meetings && (
+                <div className="list-groupd list-group-flush">
+                  <MeetingsList meetings={this.props.meetings} />
+                </div>
+              )}
             </div>
           </div>
         </div>
