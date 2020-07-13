@@ -5,7 +5,7 @@ import { FaUsers } from 'react-icons/fa';
 
 export default class Navigation extends Component {
   render() {
-    const { user } = this.props;
+    const { user, logoutUser } = this.props;
     return (
       <nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark higher">
         <div className="container-fluid">
@@ -20,7 +20,7 @@ export default class Navigation extends Component {
               </Link>
             )}
             {!user && (
-              <Link to="/login" className="nav-item nav-link" href="/login">
+              <Link to="/login" className="nav-item nav-link">
                 log in
               </Link>
             )}
@@ -35,7 +35,11 @@ export default class Navigation extends Component {
             )}
 
             {user && (
-              <Link to="/logout" className="nav-item nav-link" href="/login">
+              <Link
+                to="/logout"
+                className="nav-item nav-link"
+                onClick={(e) => logoutUser(e)}
+              >
                 log out
               </Link>
             )}
