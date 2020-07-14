@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from './Firebase';
 import AttendeesList from './AttendeesList';
-import { FaUndo } from 'react-icons/fa';
+import { FaUndo, FaRandom } from 'react-icons/fa';
 
 export default class Attendees extends Component {
   constructor(props) {
@@ -9,9 +9,11 @@ export default class Attendees extends Component {
     this.state = {
       displayAttendees: [],
       searchQuery: '',
+      allAttendees: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.resetQuery = this.resetQuery.bind(this);
+    this.chooseRandom = this.chooseRandom.bind(this);
   }
 
   componentDidMount() {
@@ -30,6 +32,7 @@ export default class Attendees extends Component {
         });
         this.setState({
           displayAttendees: attendeesList,
+          allAttendees: attendeesList,
         });
       }
     });
@@ -43,6 +46,17 @@ export default class Attendees extends Component {
   resetQuery() {
     this.setState({
       searchQuery: '',
+      displayAttendees: this.state.allAttendees,
+    });
+  }
+
+  chooseRandom() {
+    const randomAttendee = Math.floor(
+      Math.random() * this.state.allAttendees.length
+    );
+    this.resetQuery();
+    this.setState({
+      displayAttendees: [this.state.allAttendees[randomAttendee]],
     });
   }
 
@@ -78,6 +92,14 @@ export default class Attendees extends Component {
                     >
                       {' '}
                       <FaUndo />
+                    </button>
+                    <button
+                      className="btn btn-sm btn-outline-info"
+                      title="Pick a random Attendee"
+                      onClick={() => this.chooseRandom()}
+                    >
+                      {' '}
+                      <FaRandom />
                     </button>
                   </div>
                 </div>
