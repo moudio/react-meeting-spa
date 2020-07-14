@@ -8,6 +8,7 @@ import Login from './Login';
 import Register from './Register';
 import Meetings from './Meetings';
 import Checkin from './Checkin';
+import Attendees from './Attendees';
 
 import './App.css';
 
@@ -83,7 +84,7 @@ class App extends React.Component {
       });
   };
 
-  addMeething = (meetingName) => {
+  addMeeting = (meetingName) => {
     const ref = firebase.database().ref(`meetings/${this.state.user.uid}`);
     ref.push({ meetingName: meetingName });
   };
@@ -103,9 +104,12 @@ class App extends React.Component {
           <Login path="/login" />
           <Meetings
             path="/meetings"
-            addMeething={this.addMeething}
+            addMeeting={this.addMeeting}
             meetings={this.state.meetings}
-            userID={this.state.userID}
+          />
+          <Attendees
+            path="/attendees/:userID/:meetingID"
+            adminUser={this.state.userID}
           />
           <Checkin path="/checkin/:userID/:meetingID" />
           <Register path="/register" registerUser={this.registerUser} />

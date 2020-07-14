@@ -18,7 +18,7 @@ export default class Meetings extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    this.props.addMeething(this.state.meetingName);
+    this.props.addMeeting(this.state.meetingName);
     this.setState({ meetingName: '' });
   }
   render() {
