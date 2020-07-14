@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from './Firebase';
 import AttendeesList from './AttendeesList';
+import { FaUndo } from 'react-icons/fa';
 
 export default class Attendees extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export default class Attendees extends Component {
       searchQuery: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.resetQuery = this.resetQuery.bind(this);
   }
 
   componentDidMount() {
@@ -33,10 +35,15 @@ export default class Attendees extends Component {
     });
   }
   handleChange(e) {
-    console.log('handleChange called');
     const itemName = e.target.name;
     const itemValue = e.target.value;
     this.setState({ [itemName]: itemValue });
+  }
+
+  resetQuery() {
+    this.setState({
+      searchQuery: '',
+    });
   }
 
   render() {
@@ -54,14 +61,26 @@ export default class Attendees extends Component {
             <h1 className="font-weight-light text-center">Attendees</h1>
             <div className="card bg-light mb_4">
               <div className="card-body text-center">
-                <input
-                  type="text"
-                  name="searchQuery"
-                  value={this.state.searchQuery}
-                  placeholder="Search Attendees"
-                  className="form-control"
-                  onChange={this.handleChange}
-                />
+                <div className="input-group input-group-lg">
+                  <input
+                    type="text"
+                    name="searchQuery"
+                    value={this.state.searchQuery}
+                    placeholder="Search Attendees"
+                    className="form-control"
+                    onChange={this.handleChange}
+                  />
+                  <div className="input-group-append">
+                    <button
+                      className="btn btn-sm btn-outline-info"
+                      title="Reset Search"
+                      onClick={() => this.resetQuery()}
+                    >
+                      {' '}
+                      <FaUndo />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
