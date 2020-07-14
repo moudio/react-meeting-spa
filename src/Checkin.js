@@ -26,6 +26,7 @@ export default class Checkin extends Component {
     ref.push({
       attendeeName: this.state.displayName,
       attendeeEmail: this.state.email,
+      star: false,
     });
     navigate(`/attendees/${this.props.userID}/${this.props.meetingID}`);
   }

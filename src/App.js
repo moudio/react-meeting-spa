@@ -106,6 +106,7 @@ class App extends React.Component {
             path="/meetings"
             addMeeting={this.addMeeting}
             meetings={this.state.meetings}
+            userID={this.state.userID}
           />
           <Attendees
             path="/attendees/:userID/:meetingID"

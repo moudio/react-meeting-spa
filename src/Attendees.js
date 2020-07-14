@@ -21,6 +21,7 @@ export default class Attendees extends Component {
           attendeeID: item,
           attendeeName: attendees[item].attendeeName,
           attendeeEmail: attendees[item].attendeeEmail,
+          star: attendees[item].star,
         });
         this.setState({
           displayAttendees: attendeesList,
@@ -39,7 +40,9 @@ export default class Attendees extends Component {
         List Goes Here
         <AttendeesList
           userID={this.props.userID}
+          adminUser={this.props.adminUser}
           attendees={this.state.displayAttendees}
+          meetingID={this.props.meetingID}
         />
       </div>
     );
