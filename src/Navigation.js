@@ -10,7 +10,9 @@ export default class Navigation extends Component {
       <nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark higher">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand">
-            <FaUsers className="mr-1" /> Meeting Log
+            <FaUsers className="mr-1" />
+            {' '}
+            Meeting Log
           </Link>
 
           <div to="/meetings" className="navbar-nav ml-auto">

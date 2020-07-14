@@ -1,8 +1,8 @@
 import React from 'react';
+import { Router, navigate } from '@reach/router';
 import Home from './Home';
 import Welcome from './Welcome';
 import Navigation from './Navigation';
-import { Router, navigate } from '@reach/router';
 import firebase from './Firebase';
 import Login from './Login';
 import Register from './Register';
@@ -30,12 +30,12 @@ class App extends React.Component {
           displayName: FBUser.displayName,
           userID: FBUser.uid,
         });
-        const meetingsRef = firebase.database().ref('meetings/' + FBUser.uid);
+        const meetingsRef = firebase.database().ref(`meetings/${FBUser.uid}`);
         meetingsRef.on('value', (snapshot) => {
-          let meetings = snapshot.val();
-          let meetingsList = [];
+          const meetings = snapshot.val();
+          const meetingsList = [];
 
-          for (let item in meetings) {
+          for (const item in meetings) {
             meetingsList.push({
               meetingID: item,
               meetingName: meetings[item].meetingName,
@@ -54,7 +54,7 @@ class App extends React.Component {
     });
   }
 
-  registerUser = (userName) => {
+  registerUser(userName) {
     firebase.auth().onAuthStateChanged((FBUser) => {
       FBUser.updateProfile({
         displayName: userName,
@@ -67,9 +67,9 @@ class App extends React.Component {
         navigate('/meetings');
       });
     });
-  };
+  }
 
-  logoutUser = (e) => {
+  logoutUser(e) {
     e.preventDefault();
     this.setState({
       displayName: null,
@@ -82,12 +82,12 @@ class App extends React.Component {
       .then(() => {
         navigate('/login');
       });
-  };
+  }
 
-  addMeeting = (meetingName) => {
+  addMeeting(meetingName) {
     const ref = firebase.database().ref(`meetings/${this.state.user.uid}`);
-    ref.push({ meetingName: meetingName });
-  };
+    ref.push({ meetingName });
+  }
 
   render() {
     return (

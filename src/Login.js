@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { navigate } from '@reach/router';
 import firebase from './Firebase';
 import FormError from './FormError';
-import { navigate } from '@reach/router';
 
 export default class Login extends Component {
   constructor(props) {
@@ -20,8 +20,9 @@ export default class Login extends Component {
     const itemValue = e.target.value;
     this.setState({ [itemName]: itemValue });
   }
+
   handleSubmit(e) {
-    let registrationInfo = {
+    const registrationInfo = {
       email: this.state.email,
       password: this.state.password,
     };
@@ -31,7 +32,7 @@ export default class Login extends Component {
       .auth()
       .signInWithEmailAndPassword(
         registrationInfo.email,
-        registrationInfo.password
+        registrationInfo.password,
       )
       .then(() => {
         navigate('/meetings');
@@ -48,6 +49,7 @@ export default class Login extends Component {
         }
       });
   }
+
   render() {
     return (
       <form className="mt-3" onSubmit={this.handleSubmit}>

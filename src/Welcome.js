@@ -7,7 +7,9 @@ class Welcome extends Component {
     return (
       <div className="text-center mt-3">
         <span className="text-secondary font-weight-bold pl-1">
-          Welcome {userName}
+          Welcome
+          {' '}
+          {userName}
         </span>
         <Link
           to="/logout"

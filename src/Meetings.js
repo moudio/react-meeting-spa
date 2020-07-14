@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MeetingsList from './MeetingsList';
 import firebase from './Firebase';
+
 export default class Meetings extends Component {
   constructor(props) {
     super(props);
@@ -16,11 +17,13 @@ export default class Meetings extends Component {
     const itemValue = e.target.value;
     this.setState({ [itemName]: itemValue });
   }
+
   handleSubmit(e) {
     e.preventDefault();
     this.props.addMeeting(this.state.meetingName);
     this.setState({ meetingName: '' });
   }
+
   render() {
     return (
       <div className="text-center mt-3">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { FaUndo, FaRandom } from 'react-icons/fa';
 import firebase from './Firebase';
 import AttendeesList from './AttendeesList';
-import { FaUndo, FaRandom } from 'react-icons/fa';
 
 export default class Attendees extends Component {
   constructor(props) {
@@ -21,9 +21,9 @@ export default class Attendees extends Component {
       .database()
       .ref(`meetings/${this.props.userID}/${this.props.meetingID}/attendees`);
     ref.on('value', (snapshot) => {
-      let attendees = snapshot.val();
-      let attendeesList = [];
-      for (let item in attendees) {
+      const attendees = snapshot.val();
+      const attendeesList = [];
+      for (const item in attendees) {
         attendeesList.push({
           attendeeID: item,
           attendeeName: attendees[item].attendeeName,
@@ -37,6 +37,7 @@ export default class Attendees extends Component {
       }
     });
   }
+
   handleChange(e) {
     const itemName = e.target.name;
     const itemValue = e.target.value;
@@ -52,7 +53,7 @@ export default class Attendees extends Component {
 
   chooseRandom() {
     const randomAttendee = Math.floor(
-      Math.random() * this.state.allAttendees.length
+      Math.random() * this.state.allAttendees.length,
     );
     this.resetQuery();
     this.setState({
@@ -61,10 +62,9 @@ export default class Attendees extends Component {
   }
 
   render() {
-    const dataFilter = (item) =>
-      item.attendeeName
-        .toLowerCase()
-        .match(this.state.searchQuery.toLowerCase()) && true;
+    const dataFilter = (item) => item.attendeeName
+      .toLowerCase()
+      .match(this.state.searchQuery.toLowerCase()) && true;
 
     const filteredAttendees = this.state.displayAttendees.filter(dataFilter);
 

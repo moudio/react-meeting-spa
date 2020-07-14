@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from './Firebase';
 import FormError from './FormError';
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -30,8 +31,9 @@ export default class Register extends Component {
       }
     });
   }
+
   handleSubmit(e) {
-    let registrationInfo = {
+    const registrationInfo = {
       displayName: this.state.displayName,
       email: this.state.email,
       password: this.state.passOne,
@@ -42,7 +44,7 @@ export default class Register extends Component {
       .auth()
       .createUserWithEmailAndPassword(
         registrationInfo.email,
-        registrationInfo.password
+        registrationInfo.password,
       )
       .then(() => {
         this.props.registerUser(registrationInfo.displayName);

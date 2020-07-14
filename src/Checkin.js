@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import firebase from './Firebase';
 import { navigate } from '@reach/router';
+import firebase from './Firebase';
 
 export default class Checkin extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ export default class Checkin extends Component {
     const itemValue = e.target.value;
     this.setState({ [itemName]: itemValue });
   }
+
   handleSubmit(e) {
     e.preventDefault();
     const ref = firebase
@@ -30,6 +31,7 @@ export default class Checkin extends Component {
     });
     navigate(`/attendees/${this.props.userID}/${this.props.meetingID}`);
   }
+
   render() {
     return (
       <form className="mt-3" onSubmit={this.handleSubmit}>
