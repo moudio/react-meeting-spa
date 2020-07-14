@@ -1,37 +1,123 @@
 import React from 'react';
+import { Router, navigate } from '@reach/router';
+import Home from './Home';
+import Welcome from './Welcome';
+import Navigation from './Navigation';
+import firebase from './Firebase';
+import Login from './Login';
+import Register from './Register';
+import Meetings from './Meetings';
+import Checkin from './Checkin';
+import Attendees from './Attendees';
+
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  return (
-    <div className="App">
-      <div class="container text-center">
-        <div class="row justify-content-center">
-          <div class="col-10 col-md-10 col-lg-8 col-xl-7">
-            <div class="display-4 text-primary mt-3 mb-2">Meeting Log</div>
-            <p class="lead">
-              This simple app creates meetings, allows people to check in, and
-              picks random users to award giveaways. It's a good example of a
-              Single Page Application which includes connection to a database
-              and routing. It's a practical way to learn{' '}
-              <a href="https://reactjs.org/">React</a>
-              with <a href="https://firebase.google.com">Firebase</a>.
-            </p>
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      user: null,
+      displayName: null,
+      userID: null,
+    };
+  }
 
-            <a href="/register" class="btn btn-outline-primary mr-2">
-              Register
-            </a>
-            <a href="/login" class="btn btn-outline-primary mr-2">
-              Log In
-            </a>
-            <a href="/meetings" class="btn btn-primary">
-              Meetings
-            </a>
-          </div>
-        </div>
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((FBUser) => {
+      if (FBUser) {
+        this.setState({
+          user: FBUser,
+          displayName: FBUser.displayName,
+          userID: FBUser.uid,
+        });
+        const meetingsRef = firebase.database().ref(`meetings/${FBUser.uid}`);
+        meetingsRef.on('value', (snapshot) => {
+          const meetings = snapshot.val();
+          const meetingsList = [];
+
+          for (const item in meetings) {
+            meetingsList.push({
+              meetingID: item,
+              meetingName: meetings[item].meetingName,
+            });
+          }
+          this.setState({
+            meetings: meetingsList,
+            howManyMeetings: meetingsList.length,
+          });
+        });
+      } else {
+        this.setState({
+          user: null,
+        });
+      }
+    });
+  }
+
+  registerUser(userName) {
+    firebase.auth().onAuthStateChanged((FBUser) => {
+      FBUser.updateProfile({
+        displayName: userName,
+      }).then(() => {
+        this.setState({
+          user: FBUser,
+          displayName: FBUser.displayName,
+          userID: FBUser.uid,
+        });
+        navigate('/meetings');
+      });
+    });
+  }
+
+  logoutUser(e) {
+    e.preventDefault();
+    this.setState({
+      displayName: null,
+      userID: null,
+      user: null,
+    });
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        navigate('/login');
+      });
+  }
+
+  addMeeting(meetingName) {
+    const ref = firebase.database().ref(`meetings/${this.state.user.uid}`);
+    ref.push({ meetingName });
+  }
+
+  render() {
+    return (
+      <div>
+        <Navigation user={this.state.user} logoutUser={this.logoutUser} />
+        {this.state.user && (
+          <Welcome
+            userName={this.state.displayName}
+            logoutUser={this.logoutUser}
+          />
+        )}
+        <Router>
+          <Home path="/" user={this.state.user} />
+          <Login path="/login" />
+          <Meetings
+            path="/meetings"
+            addMeeting={this.addMeeting}
+            meetings={this.state.meetings}
+            userID={this.state.userID}
+          />
+          <Attendees
+            path="/attendees/:userID/:meetingID"
+            adminUser={this.state.userID}
+          />
+          <Checkin path="/checkin/:userID/:meetingID" />
+          <Register path="/register" registerUser={this.registerUser} />
+        </Router>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
