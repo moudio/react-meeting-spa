@@ -20,6 +20,9 @@ class App extends React.Component {
       displayName: null,
       userID: null,
     };
+    this.logoutUser = this.logoutUser.bind(this);
+    this.registerUser = this.registerUser.bind(this);
+    this.addMeeting = this.addMeeting.bind(this);
   }
 
   componentDidMount() {

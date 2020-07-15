@@ -61,7 +61,7 @@ export default class Meetings extends Component {
             </div>
           </div>
 
-          <div className="col-11 col-md-6 text-center">
+          <div className="col-11 col-md-6 text-center meetings-container">
             <div className="card border-top-0 rounded-0">
               {this.props.meetings && this.props.meetings.length ? (
                 <div className="card-body py-2">
@@ -71,7 +71,7 @@ export default class Meetings extends Component {
                 </div>
               ) : null}
               {this.props.meetings && (
-                <div className="list-groupd list-group-flush">
+                <div className="list-group list-group-flush">
                   <MeetingsList
                     meetings={this.props.meetings}
                     userID={this.props.userID}

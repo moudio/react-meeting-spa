@@ -15,3 +15,7 @@ code {
 body {
   font-weight: 200;
 }
+
+.meetings-container {
+  margin: 0 auto;
+}
