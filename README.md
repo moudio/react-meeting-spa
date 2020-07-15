@@ -9,7 +9,7 @@
 - ES6
 
 ## Live Version 
-<a href="https://meetingsmo.netlify.app/login" target="_blank" > Live version </a>
+<a href="https://meetingsmo.netlify.app" target="_blank" > Live version </a>
 
 ## About the Project
 
